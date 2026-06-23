@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#050505;
+color:white;
+overflow-x:hidden;
+}
+
+/* BACKGROUND */
+.bg{
+position:fixed;
+inset:0;
+z-index:-1;
+background:
+radial-gradient(circle at 20% 20%, rgba(124,92,255,.25), transparent 35%),
+radial-gradient(circle at 80% 30%, rgba(0,200,255,.18), transparent 35%),
+radial-gradient(circle at 50% 80%, rgba(255,0,140,.12), transparent 35%),
+#050505;
+}
+
+/* NAV */
+nav{
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+width:90%;
+max-width:1400px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:18px 30px;
+
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.08);
+border-radius:20px;
+
+z-index:1000;
+}
+
+.logo{
+font-size:28px;
+font-weight:900;
+}
+
+.logo span{
+background:linear-gradient(90deg,#7c5cff,#00cfff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.menu{
+display:flex;
+gap:25px;
+flex-wrap:wrap;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
+font-weight:600;
+font-size:14px;
+transition:.3s;
+}
+
+.menu a:hover{
+color:#7c5cff;
+}
+
+/* HERO */
+.hero{
+height:40vh;
+display:flex;
+align-items:end;
+justify-content:center;
+text-align:center;
+padding:0 20px;
+}
+
+.hero h1{
+font-size:clamp(50px,8vw,120px);
+font-weight:900;
+line-height:1;
+}
+
+.hero span{
+background:linear-gradient(90deg,#7c5cff,#00cfff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero p{
+margin-top:15px;
+color:#aaa;
+font-size:18px;
+}
+
+.btn{
+display:inline-block;
+margin-top:30px;
+padding:15px 35px;
+border-radius:14px;
+text-decoration:none;
+font-weight:700;
+background:linear-gradient(90deg,#7c5cff,#00cfff);
+color:white;
+}
+
+/* SECTIONS */
+section{
+padding:120px 10%;
+}
+
+.section-title{
+font-size:50px;
+font-weight:900;
+margin-bottom:40px;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+border-radius:20px;
+overflow:hidden;
+cursor:pointer;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 35px rgba(124,92,255,.25);
+}
+
+.card img,
+.card video{
+width:100%;
+object-fit:cover;
+display:block;
+}
+
+.card-content{
+padding:15px;
+}
+
+.card h3{
+font-size:18px;
+margin-bottom:5px;
+color:white;
+}
+
+.card p{
+font-size:13px;
+color:#aaa;
+}
+
+/* ABOUT */
+.about{
+text-align:center;
+max-width:800px;
+margin:auto;
+}
+
+.about p{
+font-size:20px;
+color:#aaa;
+line-height:1.7;
+}
+
+/* FOOTER */
+footer{
+text-align:center;
+padding:50px;
+color:#666;
+}
+
+/* LIGHTBOX */
+.lightbox{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.92);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+
+opacity:0;
+pointer-events:none;
+transition:.3s ease;
+}
+
+.lightbox.active{
+opacity:1;
+pointer-events:auto;
+}
+
+.lightbox img,
+.lightbox video{
+max-width:90%;
+max-height:90%;
+border-radius:15px;
+transform:scale(.8);
+transition:.3s ease;
+box-shadow:0 0 80px rgba(124,92,255,.4);
+}
+
+.lightbox.active img,
+.lightbox.active video{
+transform:scale(1);
+}
+
+.close{
+position:absolute;
+top:25px;
+right:35px;
+font-size:45px;
+cursor:pointer;
+color:white;
+transition:.2s;
+}
+
+.close:hover{
+color:#7c5cff;
+}
+
+/* MOBILE */
+@media(max-width:800px){
+.menu{display:none;}
+.section-title{font-size:35px;}
+}
+
+.social{
+text-align:center;
+padding:0 10% 80px;
+}
+
+/* верхний ряд */
+.social-top{
+display:flex;
+justify-content:center;
+gap:25px;
+margin-top:30px;
+flex-wrap:wrap;
+}
+
+/* иконки */
+.social-card{
+width:70px;
+height:70px;
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:18px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.1);
+backdrop-filter:blur(20px);
+
+color:white;
+font-size:26px;
+
+transition:.3s;
+position:relative;
+overflow:hidden;
+}
+
+.social-card:hover{
+transform:translateY(-6px) scale(1.05);
+border-color:rgba(124,92,255,.6);
+box-shadow:0 10px 40px rgba(124,92,255,.25);
+color:#7c5cff;
+}
+
+/* glow */
+.social-card::before{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(90deg,transparent,rgba(124,92,255,.25),transparent);
+transform:translateX(-100%);
+transition:.6s;
+}
+
+.social-card:hover::before{
+transform:translateX(100%);
+}
+
+/* email снизу */
+.social-email{
+margin-top:25px;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:8px;
+
+color:rgba(255,255,255,.7);
+font-size:14px;
+}
+
+.social-email i{
+font-size:20px;
+color:#7c5cff;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<nav>
+<div class="logo">Kinnixx<span>.</span></div>
+
+<div class="menu">
+<a href="#home">Home</a>
+<a href="#art">Art</a>
+<a href="#real">Realistic Art</a>
+<a href="#zbrush">ZBrush</a>
+<a href="#zt">ZBrush+Texture</a>
+<a href="#blender">Blender</a>
+<a href="#anim">Animation</a>
+</div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero">
+<div>
+<h1>Creative <span>Portfolio</span></h1>
+<p>3D Artist • Designer • Animator</p>
+<a class="btn" href="#art">View Works</a>
+</div>
+</section>
+
+<!-- ART -->
+<section id="art">
+<h2 class="section-title">Art</h2>
+<div class="grid">
+
+<div class="card"><img src="images/art1.PNG" width="100%" height="300px"></div>
+<div class="card"><img src="images/art2.PNG" width="100%" height="300px"></div>
+<div class="card"><img src="images/art3.PNG" width="100%" height="300px"></div>
+<div class="card"><img src="images/art4.PNG" width="100%" height="300px"></div>
+<div class="card"><img src="images/art5.PNG" width="100%" height="300px"></div>
+<div class="card"><img src="images/art6.PNG" width="100%" height="300px"></div>
+<div class="card"><img src="images/art7.PNG" width="100%" height="300px"></div>
+<div class="card"><img src="images/art8.PNG" width="100%" height="300px"></div>
+
+</div>
+</section>
+
+<!-- REAL -->
+<section id="real">
+<h2 class="section-title">Realistic Art</h2>
+<div class="grid">
+
+<div class="card"><img src="images/real1.JPG" width="100%" height="600px"></div>
+<div class="card"><img src="images/real2.JPG" width="100%" height="600px"></div>
+<div class="card"><img src="images/real3.JPG" width="100%" height="600px"></div>
+
+</div>
+</section>
+
+<!-- ZBRUSH -->
+<section id="zbrush">
+<h2 class="section-title">ZBrush</h2>
+<div class="grid">
+
+<div class="card"><img src="images/z1.PNG"></div>
+<div class="card"><img src="images/z2.PNG"></div>
+<div class="card"><img src="images/z3.PNG"></div>
+<div class="card"><img src="images/z4.PNG"></div>
+<div class="card"><img src="images/z5.PNG"></div>
+
+</div>
+</section>
+
+<!-- ZT -->
+<section id="zt">
+<h2 class="section-title">ZBrush + Texturing</h2>
+<div class="grid">
+
+<div class="card"><img src="images/zt1.PNG" width="100%" height="300px"></div>
+<div class="card"><img src="images/zt2.PNG" width="100%" height="300px"></div>
+<div class="card"><img src="images/zt3.PNG" width="100%" height="300px"></div>
+<div class="card"><img src="images/zt4.PNG" width="100%" height="300px"></div>
+
+</div>
+</section>
+
+<!-- BLENDER -->
+<section id="blender">
+<h2 class="section-title">Blender</h2>
+<div class="grid">
+
+<div class="card"><img src="images/b1.JPG"></div>
+<div class="card"><img src="images/b2.JPG"></div>
+<div class="card"><img src="images/b3.JPG"></div>
+<div class="card"><img src="images/b4.PNG"></div>
+<div class="card"><img src="images/b5.PNG"></div>
+<div class="card"><img src="images/b6.JPG"></div>
+
+</div>
+</section>
+
+<!-- ANIMATION -->
+<section id="anim">
+<h2 class="section-title">2D Animation</h2>
+<div class="grid">
+
+<div class="card"><video autoplay muted loop playsinline><source src="animations/a1.mp4"></video></div>
+<div class="card"><video autoplay muted loop playsinline><source src="animations/a2.mp4"></video></div>
+<div class="card"><video autoplay muted loop playsinline><source src="animations/a3.mp4"></video></div>
+<div class="card"><video autoplay muted loop playsinline><source src="animations/a4.mp4"></video></div>
+<div class="card"><video autoplay muted loop playsinline><source src="animations/a5.mp4"></video></div>
+
+</div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+<h2 class="section-title">About Me</h2>
+<p>
+Hi, I'm Kinnixx — 3D artist and designer. I create models, art and animation.
+</p>
+</section>
+
+<section class="social">
+<h2 class="section-title">Contact</h2>
+
+<div class="social-top">
+
+<a href="https://www.instagram.com/kixxiee_?igsh=a3RzamI0cWh3Nzhz" target="_blank" class="social-card">
+<i class="fa-brands fa-instagram"></i>
+</a>
+
+<a href="https://t.me/kinnixxx" target="_blank" class="social-card">
+<i class="fa-brands fa-telegram"></i>
+</a>
+
+</div>
+
+<div class="social-email">
+<i class="fa-solid fa-envelope"></i>
+<span>focsasveta@gmail.com</span>
+</div>
+
+</section>
+
+<footer>© 2026 Portfolio</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+<div class="close" onclick="closeLB()">×</div>
+
+<img id="lbImg" style="display:none;">
+<video id="lbVideo" controls autoplay loop muted style="display:none;"></video>
+
+</div>
+
+<script>
+
+const lb = document.getElementById("lightbox");
+const img = document.getElementById("lbImg");
+const video = document.getElementById("lbVideo");
+
+// IMAGES
+document.querySelectorAll(".card img").forEach(i=>{
+i.addEventListener("click",()=>{
+lb.classList.add("active");
+
+img.style.display="block";
+video.style.display="none";
+
+img.src = i.src;
+});
+});
+
+// VIDEO
+document.querySelectorAll(".card video").forEach(v=>{
+v.addEventListener("click",()=>{
+lb.classList.add("active");
+
+img.style.display="none";
+video.style.display="block";
+
+video.src = v.querySelector("source").src;
+video.play();
+});
+});
+
+function closeLB(){
+lb.classList.remove("active");
+img.src="";
+video.pause();
+video.src="";
+}
+
+lb.addEventListener("click",(e)=>{
+if(e.target===lb) closeLB();
+});
+
+</script>
+
+</body>
+</html>
